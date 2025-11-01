@@ -1,0 +1,108 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Login</title>
+		<link
+			rel="stylesheet"
+			href="../styles/login.css" />
+	</head>
+	<body>
+		<form id="loginForm">
+			<h2>Login</h2>
+
+			<div class="form-group">
+				<label for="email">Email</label>
+				<input
+					type="email"
+					name="email"
+					placeholder=""
+					required
+					id="email" />
+			</div>
+
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input
+					type="password"
+					name="password"
+					placeholder=""
+					required
+					id="password" />
+			</div>
+
+			<div class="forgotten">
+				<a href="../components/ForgotenPassword.html"
+					>Forgotten password ?
+				</a>
+			</div>
+
+			<button type="submit">Submit</button>
+
+			<p
+				>Don't have an account ?
+				<span
+					><a href="../components/RegisterPage.html">Sign up</a></span
+				></p
+			>
+
+			<div id="message"></div>
+		</form>
+
+		<script>
+			const form = document.getElementById("loginForm");
+
+			form.addEventListener("submit", async (e) => {
+				e.preventDefault();
+
+				const data = {
+					email: document.getElementById("email").value,
+					password: document.getElementById("password").value,
+				};
+
+				const messageBox = document.getElementById("message");
+
+				try {
+					const response = await fetch(
+						"http://localhost:3000/api/v1/users/login",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify(data),
+						}
+					);
+
+					const result = await response.json();
+
+					if (!response.ok) {
+						// Handle errors gracefully
+						const errorMessages = Array.isArray(result.message)
+							? result.message.join(", ")
+							: result.message || "Something went wrong";
+
+						messageBox.style.color = "red";
+						messageBox.textContent = `${errorMessages}`;
+					} else {
+						// Success
+						messageBox.style.color = "green";
+						messageBox.textContent =
+							result.message || "Login successful!";
+					}
+				} catch (error) {
+					// Network or other errors
+					messageBox.style.color = "red";
+					messageBox.textContent =
+						"Login failed. Please check your network connection.";
+					console.error("Login error:", error);
+				}
+			});
+		</script>
+	</body>
+</html>
