@@ -1,0 +1,128 @@
+/**
+ * login.css
+ *
+ * @format
+ */
+
+/* Reset some default styles */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: linear-gradient(135deg, #6a11cb, #2575fc);
+}
+
+form#loginForm {
+	background-color: #fff;
+	padding: 2.5rem 3rem;
+	border-radius: 12px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+	width: 100%;
+	max-width: 400px;
+	text-align: center;
+}
+
+form#loginForm h2 {
+	margin-bottom: 1.5rem;
+	color: #333;
+	font-size: 2rem;
+}
+
+.form-group {
+	margin-bottom: 1.2rem;
+	text-align: left;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 0.5rem;
+	color: #555;
+	font-weight: 500;
+}
+
+.form-group input {
+	width: 100%;
+	padding: 0.8rem 1rem;
+	border-radius: 8px;
+	border: 1px solid #ccc;
+	font-size: 1rem;
+	transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus {
+	border-color: #2575fc;
+	box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
+	outline: none;
+}
+
+button[type="submit"] {
+	width: 100%;
+	padding: 0.9rem;
+	background-color: #2575fc;
+	color: #fff;
+	border: none;
+	border-radius: 8px;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.3s, transform 0.2s;
+	margin-top: 0.5rem;
+}
+
+button[type="submit"]:hover {
+	background-color: #6a11cb;
+	transform: translateY(-2px);
+}
+
+.forgotten {
+	margin: 0.8rem 0;
+	text-align: right;
+}
+
+.forgotten a {
+	text-decoration: none;
+	color: #2575fc;
+	font-size: 0.9rem;
+	transition: color 0.3s;
+}
+
+.forgotten a:hover {
+	color: #6a11cb;
+}
+
+p {
+	margin-top: 1rem;
+	font-size: 0.95rem;
+	color: #555;
+}
+
+p a {
+	color: #2575fc;
+	text-decoration: none;
+	font-weight: 500;
+	transition: color 0.3s;
+}
+
+p a:hover {
+	color: #6a11cb;
+}
+
+#message {
+	margin-top: 1rem;
+	font-weight: 500;
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 480px) {
+	form#loginForm {
+		padding: 2rem;
+	}
+}

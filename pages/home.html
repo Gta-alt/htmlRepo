@@ -1,0 +1,108 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Home</title>
+		<link
+			rel="stylesheet"
+			href="../styles/home.css" />
+	</head>
+	<body>
+		<div id="navbar-container"></div>
+
+		<div class="group">
+			<aside>Aside</aside>
+			<main id="main-content"></main>
+		</div>
+
+		<footer>Footer</footer>
+
+		<script>
+			const main = document.getElementById("main-content");
+			let currentAudio = null;
+			let currentCard = null;
+
+			const radioStations = [
+				{
+					name: "My FM Radio",
+					streamUrl: "https://vpr.streamguys1.com/vpr64.mp3",
+					logoUrl: "../public/images/fm-image-1.jpg",
+				},
+				{
+					name: "Radio Massive",
+					streamUrl: "https://vpr.streamguys1.com/vpr96.mp3",
+					logoUrl: "../public/images/fm-image-1.jpg",
+				},
+				{
+					name: "Radio Massive",
+					streamUrl: "https://fm939.wnyc.org/wnycfm",
+					logoUrl: "../public/images/fm-image-1.jpg",
+				},
+			];
+
+			fetch("../components/Navbar.html")
+				.then((res) => res.text())
+				.then((html) => {
+					document.getElementById("navbar-container").innerHTML =
+						html;
+				});
+
+			function createAudioCard(station) {
+				return `
+			        <div class="audio-card" style="background-image: url('${station.logoUrl}');">
+			          <div class="overlay">
+			            <h3>${station.name}</h3>
+			            <button class="play-btn">▶️</button>
+			          </div>
+			          <audio loop preload="none" data-src="${station.streamUrl}"></audio>
+			        </div>
+			      `;
+			}
+
+			function renderCards(count) {
+				let cardsHTML = "";
+				for (let i = 0; i < count; i++) {
+					const station = radioStations[i % radioStations.length];
+					cardsHTML += createAudioCard(station);
+				}
+				main.innerHTML = cardsHTML;
+
+				document.querySelectorAll(".audio-card").forEach((card) => {
+					const audio = card.querySelector("audio");
+					const btn = card.querySelector(".play-btn");
+					audio.src = audio.dataset.src;
+
+					btn.addEventListener("click", (e) => {
+						e.stopPropagation();
+
+						if (currentAudio && currentAudio !== audio) {
+							currentAudio.pause();
+							if (currentCard)
+								currentCard.querySelector(".play-btn").textContent =
+									"▶️";
+						}
+
+						if (audio.paused) {
+							audio.play();
+							btn.textContent = "⏸️";
+							currentAudio = audio;
+							currentCard = card;
+						} else {
+							audio.pause();
+							btn.textContent = "▶️";
+							currentAudio = null;
+							currentCard = null;
+						}
+					});
+				});
+			}
+
+			renderCards(20);
+		</script>
+	</body>
+</html>

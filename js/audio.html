@@ -1,0 +1,98 @@
+<!-- @format -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Radio Talk Player</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				padding: 20px;
+			}
+			.audio-item {
+				margin-bottom: 15px;
+				padding: 10px;
+				border: 1px solid #ccc;
+				border-radius: 8px;
+			}
+			button {
+				padding: 6px 14px;
+				border: none;
+				border-radius: 6px;
+				background: #007bff;
+				color: white;
+				cursor: pointer;
+			}
+			button:hover {
+				background: #0056b3;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Radio Talk Player</h1>
+		<div id="audioList"></div>
+
+		<script>
+			let currentAudio = null; // store currently playing audio
+			let currentButton = null; // store the button of that audio
+
+			async function loadAudio() {
+				const res = await fetch("http://localhost:4000/api/audio");
+				const data = await res.json();
+
+				const container = document.getElementById("audioList");
+				container.innerHTML = data
+					.map(
+						(item, index) => `
+            <div class="audio-item">
+              <p>Audio ${index + 1}</p>
+              <button data-url="${item.audio_url}">Play</button>
+            </div>
+          `
+					)
+					.join("");
+
+				document
+					.querySelectorAll("button[data-url]")
+					.forEach((btn) => {
+						btn.addEventListener("click", () => handlePlay(btn));
+					});
+			}
+
+			function handlePlay(button) {
+				const url = button.getAttribute("data-url");
+
+				// Stop previously playing audio if another is clicked
+				if (currentAudio && !currentAudio.paused) {
+					currentAudio.pause();
+					currentAudio.currentTime = 0;
+					if (currentButton) currentButton.textContent = "Play";
+				}
+
+				// Create a new audio element
+				currentAudio = new Audio(url);
+				currentButton = button;
+
+				currentAudio.play();
+				button.textContent = "Pause";
+
+				// When the audio ends, reset button text
+				currentAudio.addEventListener("ended", () => {
+					button.textContent = "Play";
+				});
+
+				// Toggle play/pause when clicking the same button
+				button.onclick = () => {
+					if (currentAudio.paused) {
+						currentAudio.play();
+						button.textContent = "Pause";
+					} else {
+						currentAudio.pause();
+						button.textContent = "Play";
+					}
+				};
+			}
+
+			loadAudio();
+		</script>
+	</body>
+</html>

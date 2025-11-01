@@ -1,0 +1,114 @@
+/** @format */
+/* register.css */
+
+/* Reset default styles */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: linear-gradient(
+		135deg,
+		#ff6a00,
+		#ee0979
+	); /* warm gradient */
+}
+
+form#registerForm {
+	background-color: #fff;
+	padding: 2.5rem 3rem;
+	border-radius: 12px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+	width: 100%;
+	max-width: 400px;
+	text-align: center;
+}
+
+form#registerForm h2 {
+	margin-bottom: 1.5rem;
+	color: #333;
+	font-size: 2rem;
+}
+
+.form-group {
+	margin-bottom: 1.2rem;
+	text-align: left;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 0.5rem;
+	color: #555;
+	font-weight: 500;
+}
+
+.form-group input {
+	width: 100%;
+	padding: 0.8rem 1rem;
+	border-radius: 8px;
+	border: 1px solid #ccc;
+	font-size: 1rem;
+	transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus {
+	border-color: #ee0979;
+	box-shadow: 0 0 5px rgba(238, 9, 121, 0.5);
+	outline: none;
+}
+
+button[type="submit"] {
+	width: 100%;
+	padding: 0.9rem;
+	background-color: #ee0979;
+	color: #fff;
+	border: none;
+	border-radius: 8px;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.3s, transform 0.2s;
+	margin-top: 0.5rem;
+}
+
+button[type="submit"]:hover {
+	background-color: #ff6a00;
+	transform: translateY(-2px);
+}
+
+p {
+	margin-top: 1rem;
+	font-size: 0.95rem;
+	color: #555;
+}
+
+p a {
+	color: #ee0979;
+	text-decoration: none;
+	font-weight: 500;
+	transition: color 0.3s;
+}
+
+p a:hover {
+	color: #ff6a00;
+}
+
+#message {
+	margin-top: 1rem;
+	font-weight: 500;
+	text-align: center;
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 480px) {
+	form#registerForm {
+		padding: 2rem;
+	}
+}
